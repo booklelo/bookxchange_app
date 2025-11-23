@@ -34,6 +34,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text(_title)));
+    return Scaffold(
+      appBar: AppBar(title: Text(_title), backgroundColor: Colors.blue[800]),
+      body: Center(child: Text("Welome to BookLelo!")),
+    );
   }
 }
