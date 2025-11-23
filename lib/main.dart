@@ -10,9 +10,10 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'BookLelo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'BookLelo'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -23,12 +24,16 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState(title);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String _title = "PLACEHOLDER";
+
+  _MyHomePageState(String title) : _title = title;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Hello")));
+    return Scaffold(body: Center(child: Text(_title)));
   }
 }
