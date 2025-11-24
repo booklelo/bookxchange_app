@@ -36,7 +36,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(_title), backgroundColor: Colors.blue[800]),
-      body: Center(child: Text("Welome to BookLelo!")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Welcome to BookLelo!',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              'Your one-stop solution for book lovers.',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
