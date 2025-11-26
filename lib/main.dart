@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 8), // spacing
             Text(
-              'Explore thousands of books across genres, enjoy personalized recommendations, and manage your reading journey effortlessly',
+              'Explore thousands of books across genres, enjoy personalized recommendations and manage your reading journey effortlessly',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 height: 1.4, // better readability
               ),
