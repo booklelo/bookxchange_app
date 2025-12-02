@@ -1,5 +1,6 @@
 import 'package:bookxchange_app/core/constants/color_codes.dart';
 import 'package:bookxchange_app/screens/auth/login_screen.dart';
+import 'package:bookxchange_app/screens/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/buttons/login_button.dart';
 
@@ -50,6 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignupScreen()),
+                );
+              },
+              child: Text("Join Us"),
             ),
           ],
         ),
