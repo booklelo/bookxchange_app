@@ -4,11 +4,11 @@ import '../../core/constants/color_codes.dart';
 // @SAQIB
 // Login button widget used in the authentication screens.
 
-class LoginButton extends StatelessWidget {
+class AuthButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  const LoginButton({super.key, required this.text, required this.onPressed});
+  const AuthButton({super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

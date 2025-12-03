@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text("Home", style: TextStyle(color: ColorCodes.textColor)),
-        backgroundColor: ColorCodes.primaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(2),
