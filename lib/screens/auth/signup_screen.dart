@@ -1,3 +1,5 @@
+import 'package:bookxchange_app/screens/home/home_screen.dart';
+import 'package:bookxchange_app/services/auth/signup_auth.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/color_codes.dart';
 
@@ -23,14 +25,28 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void _handleSignup() {
+  void _handleSignup() async {
     final String name = _nameController.text.trim();
     final String email = _emailController.text.trim();
     final String password = _passwordController.text.trim();
 
-    print("Name: $name");
-    print("Email: $email");
-    print("Password: $password");
+    // print("Name: $name");
+    // print("Email: $email");
+    // print("Password: $password");
+
+    String value = await SignupAuth().signupUser(name, email, password);
+
+    if (value == "success") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    } else {
+      // Show error message
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(value)));
+    }
   }
 
   @override
