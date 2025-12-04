@@ -1,4 +1,3 @@
-import 'package:bookxchange_app/core/constants/color_codes.dart';
 import 'package:bookxchange_app/screens/auth/login_screen.dart';
 import 'package:bookxchange_app/screens/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
           40,
           98,
           145,
-        ), // 🔵 Only this blue
+        ), 
         title: Text(
           widget.title,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -68,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   40,
                   98,
                   145,
-                ), // 🔵 BLUE BG
+                ), 
               ),
               onPressed: () {
                 Navigator.push(
@@ -78,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text(
                 "Join Us",
-                style: TextStyle(color: Colors.white), // ⚪ WHITE TEXT
+                style: TextStyle(color: Colors.white), 
               ),
             ),
             const SizedBox(height: 20),
