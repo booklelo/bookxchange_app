@@ -33,7 +33,7 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BookLelo',
+      title: 'BookLelo', 
       debugShowCheckedModeBanner: false,
 
       theme: lightTheme,
