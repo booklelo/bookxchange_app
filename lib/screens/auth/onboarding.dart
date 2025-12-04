@@ -18,7 +18,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(
+          255,
+          40,
+          98,
+          145,
+        ), // 🔵 Only this blue
+        title: Text(
+          widget.title,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
 
       body: Center(
         child: Column(
@@ -28,34 +39,36 @@ class _MyHomePageState extends State<MyHomePage> {
               'Welcome to BookLelo!',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-
+            const SizedBox(height: 20),
             Text(
               'Your one-stop solution for book lovers.',
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-
             const SizedBox(height: 50),
 
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 40, 98, 145),
+              ),
               onPressed: widget.toggleTheme,
-              child: const Text('Change Theme Mode'),
+              child: const Text(
+                'Change Theme Mode',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
 
-            const SizedBox(height: 20),
-
-            AuthButton(
-              text: 'Login',
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
-            ),
             const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorCodes.primaryColor,
+                backgroundColor: const Color.fromARGB(
+                  255,
+                  40,
+                  98,
+                  145,
+                ), // 🔵 BLUE BG
               ),
               onPressed: () {
                 Navigator.push(
@@ -63,10 +76,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => const SignupScreen()),
                 );
               },
-              child: Text(
-                style: const TextStyle(color: ColorCodes.backgroundColor),
+              child: const Text(
                 "Join Us",
+                style: TextStyle(color: Colors.white), // ⚪ WHITE TEXT
               ),
+            ),
+            const SizedBox(height: 20),
+            AuthButton(
+              text: 'Login',
+
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              },
             ),
           ],
         ),
