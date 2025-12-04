@@ -1,8 +1,9 @@
-import 'package:bookxchange_app/app.dart';
+import 'package:bookxchange_app/screens/auth/onboarding.dart';
 import 'package:bookxchange_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
-import '../../core/constants/color_codes.dart';
 import '../../services/auth/login_auth.dart';
+void emptyFunction() {}
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -161,18 +162,24 @@ const SizedBox(height: 20),
 
 
 Align(
-  
+  alignment: Alignment.center,
   child: TextButton.icon(
     onPressed: () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const MyHomePage(
+          title: "BookLelo",
+          toggleTheme: emptyFunction,
+        )),
       );
     },
     icon: const Icon(Icons.arrow_back),
-    label: const Text("Back"),
+    label: const Text(
+      "Back",
+      style: TextStyle(fontSize: 16),
+    ),
   ),
-),
+)
 
 
               ],
