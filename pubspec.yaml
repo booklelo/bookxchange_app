@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^4.2.1
 
   double_tap_to_exit: ^1.0.3
+  cloud_firestore: ^6.1.0
 
 dev_dependencies:
   flutter_test:

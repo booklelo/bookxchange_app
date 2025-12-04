@@ -8,7 +8,7 @@ class LoginAuth {
 
   Future<String> loginUser(String email, String password) async {
     try {
-      print("$email and $password");
+      // print("$email and $password");
 
       final credential = await _auth.signInWithEmailAndPassword(
         email: email,
