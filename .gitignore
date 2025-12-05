@@ -2,6 +2,8 @@
 .env
 *.env
 
+# Firebase
+android/app/google-services.json
 
 # Miscellaneous
 *.class
