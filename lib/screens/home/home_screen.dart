@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/color_codes.dart';
-import 'package:double_tap_to_exit/double_tap_to_exit.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

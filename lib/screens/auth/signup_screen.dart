@@ -2,9 +2,12 @@ import 'package:bookxchange_app/screens/home/home_screen.dart';
 import 'package:bookxchange_app/services/auth/signup_auth.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/color_codes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
+ 
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -37,6 +40,10 @@ class _SignupScreenState extends State<SignupScreen> {
     String value = await SignupAuth().signupUser(name, email, password);
 
     if (value == "success") {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("email", email);
+      prefs.setString("password", password);
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
