@@ -12,25 +12,29 @@ class SignupAuth {
         password: password,
       );
 
-      final userInfo = <String, dynamic>{
+      final userInfo = {
         "name": name,
         "email": email,
         "uid": credential.user?.uid,
       };
 
-      db.collection("users").doc(userInfo['uid']).set(userInfo);
+      await db.collection("users").doc(userInfo['uid']).set(userInfo);
 
-      return "success"; // authenticated successfully
+      return "success"; // SIGNUP SUCCESS
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
 
-    return "Something went wrong. Try again later.";
+      if (e.code == 'weak-password') {
+        return 'The password provided is too weak.';
+      } 
+
+      if (e.code == 'email-already-in-use') {
+        return 'The account already exists for that email.';
+      }
+
+      // Any other Firebase error
+      return e.message ?? "Signup failed.";
+    } catch (e) {
+      return "Something went wrong. Try again.";
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bookxchange_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import '../auth/onboarding.dart';
 import '../../services/auth/login_auth.dart';
 import '../auth/onboarding.dart';
 
@@ -13,6 +14,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // Controllers to capture user input
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -46,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   const SizedBox(height: 10),
+
                   Text(
                     "Welcome Back!",
                     style: TextStyle(
@@ -57,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
 
+                  // Email Label
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -68,10 +75,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 6),
 
+                  // Email Field
                   TextField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                       hintText: "Enter your email",
                       filled: true,
@@ -87,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 20),
 
+                  // Password Label
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -100,7 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 6),
 
+                  // Password Field
                   TextField(
+                    controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: "Enter your password",
@@ -117,12 +128,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
 
+                  // LOGIN BUTTON
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        String value = await LoginAuth().loginUser(
-                            "jvedsaqib1@gmail.com", "Saqib@11");
+                        String email = _emailController.text.trim();
+                        String password = _passwordController.text.trim();
+
+                        if (email.isEmpty || password.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Enter email and password")),
+                          );
+                          return;
+                        }
+
+                        // Firebase Login
+                        String value =
+                            await LoginAuth().loginUser(email, password);
 
                         if (value == "success") {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -148,8 +171,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: const Text(
                         "LOGIN",
-                        style:
-                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -166,6 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 20),
 
+                  // BACK BUTTON
                   TextButton.icon(
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -179,8 +205,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     },
                     icon: const Icon(Icons.arrow_back),
-                    label: const Text("Back", style: TextStyle(fontSize: 16)),
-                  )
+                    label: const Text(
+                      "Back",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
                 ],
               ),
             ),
