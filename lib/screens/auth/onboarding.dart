@@ -18,78 +18,85 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(
-          255,
-          40,
-          98,
-          145,
-        ), 
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromARGB(255, 40, 98, 145),
         title: Text(
           widget.title,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
+
+        // ✅ THEME TOGGLE MOVED TO APPBAR
+        actions: [
+          IconButton(
+            onPressed: widget.toggleTheme,
+            icon: const Icon(Icons.brightness_6),
+            tooltip: "Change Theme",
+          ),
+        ],
       ),
 
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Welcome to BookLelo!',
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+
             const SizedBox(height: 20),
+
             Text(
               'Your one-stop solution for book lovers.',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 50),
 
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 40, 98, 145),
-              ),
-              onPressed: widget.toggleTheme,
-              child: const Text(
-                'Change Theme Mode',
-                style: TextStyle(color: Colors.white),
+            const SizedBox(height: 60),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 40, 98, 145),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignupScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Join Us",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
               ),
             ),
 
             const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(
-                  255,
-                  40,
-                  98,
-                  145,
-                ), 
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignupScreen()),
-                );
-              },
-              child: const Text(
-                "Join Us",
-                style: TextStyle(color: Colors.white), 
-              ),
-            ),
-            const SizedBox(height: 20),
-            AuthButton(
-              text: 'Login',
 
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
+            SizedBox(
+              width: double.infinity,
+              child: AuthButton(
+                text: 'Login',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          LoginScreen(toggleTheme: widget.toggleTheme),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),

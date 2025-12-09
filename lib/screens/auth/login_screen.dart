@@ -2,21 +2,28 @@ import 'package:bookxchange_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../auth/onboarding.dart';
 import '../../services/auth/login_auth.dart';
-import '../auth/onboarding.dart';
-
-void emptyFunction() {}
+import 'forgot_password_email.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final VoidCallback toggleTheme;
+
+  const LoginScreen({super.key, required this.toggleTheme});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // Controllers to capture user input
+  // Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: theme.shadowColor.withOpacity(0.15),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
-                  )
+                  ),
                 ],
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    Icons.book,
-                    size: 60,
-                    color: theme.colorScheme.primary,
-                  ),
-
+                  Icon(Icons.book, size: 60, color: theme.colorScheme.primary),
                   const SizedBox(height: 10),
 
                   Text(
@@ -63,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
 
-                  // Email Label
+                  // EMAIL
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -77,15 +79,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 6),
 
-                  // Email Field
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
                       hintText: "Enter your email",
                       filled: true,
                       fillColor: theme.colorScheme.surfaceVariant,
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 14,
+                        horizontal: 14,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
@@ -95,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 20),
 
-                  // Password Label
+                  // PASSWORD
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -109,7 +112,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 6),
 
-                  // Password Field
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
@@ -117,8 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: "Enter your password",
                       filled: true,
                       fillColor: theme.colorScheme.surfaceVariant,
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 14,
+                        horizontal: 14,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
@@ -138,14 +142,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         if (email.isEmpty || password.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Enter email and password")),
+                            const SnackBar(
+                              content: Text("Enter email and password"),
+                            ),
                           );
                           return;
                         }
 
-                        // Firebase Login
-                        String value =
-                            await LoginAuth().loginUser(email, password);
+                        String value = await LoginAuth().loginUser(
+                          email,
+                          password,
+                        );
+
+                        if (!mounted) return;
 
                         if (value == "success") {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -155,12 +164,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const HomeScreen()),
+                              builder: (context) => const HomeScreen(),
+                            ),
                           );
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(value)),
-                          );
+                          ScaffoldMessenger.of(
+                            context,
+                          ).showSnackBar(SnackBar(content: Text(value)));
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -181,11 +191,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 15),
 
-                  Text(
-                    "Forgot your password?",
-                    style: TextStyle(
-                      color: theme.colorScheme.primary,
-                      fontSize: 14,
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const ForgotPasswordEmailScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Forgot your password?",
+                      style: TextStyle(color: theme.colorScheme.primary),
                     ),
                   ),
 
@@ -197,18 +215,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MyHomePage(
+                          builder: (context) => MyHomePage(
                             title: "BookLelo",
-                            toggleTheme: emptyFunction,
+                            toggleTheme: widget.toggleTheme,
                           ),
                         ),
                       );
                     },
                     icon: const Icon(Icons.arrow_back),
-                    label: const Text(
-                      "Back",
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    label: const Text("Back", style: TextStyle(fontSize: 16)),
                   ),
                 ],
               ),
