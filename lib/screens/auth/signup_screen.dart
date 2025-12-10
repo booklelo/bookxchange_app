@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import '../../core/constants/color_codes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
- 
+  final VoidCallback toggleTheme;
+  const SignupScreen({super.key, required this.toggleTheme});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -46,7 +45,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(toggleTheme: widget.toggleTheme),
+        ),
       );
     } else {
       // Show error message

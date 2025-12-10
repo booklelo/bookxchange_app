@@ -33,7 +33,7 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BookLelo', 
+      title: 'BookLelo',
       debugShowCheckedModeBanner: false,
 
       theme: lightTheme,
@@ -48,7 +48,7 @@ class _MainState extends State<Main> {
           }
 
           if (snapshot.hasData) {
-            return HomeScreen();
+            return HomeScreen(toggleTheme: _toggleTheme);
           }
 
           return MyHomePage(title: 'BookLelo', toggleTheme: _toggleTheme);

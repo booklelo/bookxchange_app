@@ -70,7 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignupScreen(),
+                      builder: (context) =>
+                          SignupScreen(toggleTheme: widget.toggleTheme),
                     ),
                   );
                 },
