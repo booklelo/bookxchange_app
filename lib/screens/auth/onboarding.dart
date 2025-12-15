@@ -25,14 +25,13 @@ class _MyHomePageState extends State<MyHomePage> {
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
 
-        // ✅ THEME TOGGLE MOVED TO APPBAR
-        actions: [
-          IconButton(
-            onPressed: widget.toggleTheme,
-            icon: const Icon(Icons.brightness_6),
-            tooltip: "Change Theme",
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: widget.toggleTheme,
+        //     icon: const Icon(Icons.brightness_6),
+        //     tooltip: "Change Theme",
+        //   ),
+        // ],
       ),
 
       body: Padding(
