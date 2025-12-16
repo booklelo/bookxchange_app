@@ -14,14 +14,6 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   ThemeMode _themeMode = ThemeMode.light;
 
-  @override
-  void initState() {
-    super.initState();
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      print(user == null ? "User Signed Out" : "User Signed In");
-    });
-  }
-
   void _toggleTheme() {
     setState(() {
       _themeMode = _themeMode == ThemeMode.dark
@@ -35,22 +27,27 @@ class _MainState extends State<Main> {
     return MaterialApp(
       title: 'BookLelo',
       debugShowCheckedModeBanner: false,
-
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: _themeMode,
 
+      // 🔑 AUTH GATE (THIS IS THE KEY)
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          // ⏳ Waiting for Firebase to restore session
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
           }
 
+          // ✅ User logged in
           if (snapshot.hasData) {
             return HomeScreen(toggleTheme: _toggleTheme);
           }
 
+          // ❌ User not logged in
           return MyHomePage(title: 'BookLelo', toggleTheme: _toggleTheme);
         },
       ),
