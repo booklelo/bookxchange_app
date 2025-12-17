@@ -66,12 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
             const Icon(Icons.menu_book, size: 30, color: Colors.white),
             const Icon(Icons.chat, size: 30, color: Colors.white),
 
-            // 👇 PROFILE ICON WITH 5s HOLD LOGOUT
             GestureDetector(
               onLongPressStart: (_) {
                 _isHoldingProfile = true;
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Hold for 5 seconds to logout")),
+                  const SnackBar(content: Text("Hold for 3 seconds to logout")),
                 );
 
                 _logoutTimer = Timer(const Duration(seconds: 3), () {
