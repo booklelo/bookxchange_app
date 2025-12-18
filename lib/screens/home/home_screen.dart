@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import '../../core/constants/color_codes.dart';
-import '../profile/my_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../core/constants/color_codes.dart';
 import '../auth/onboarding.dart';
-import 'dart:async';
+import '../profile/my_profile.dart';
+import 'home_feed.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback toggleTheme;
@@ -17,12 +18,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _page = 0;
+  int _currentIndex = 0;
   Timer? _logoutTimer;
   bool _isHoldingProfile = false;
-
-  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey =
-      GlobalKey<CurvedNavigationBarState>();
 
   Future<void> _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
@@ -34,11 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  final List<Widget> _pages = [
-    const Center(child: Text("Home Page", style: TextStyle(fontSize: 22))),
-    const Center(child: Text("Search Page", style: TextStyle(fontSize: 22))),
-    const Center(child: Text("Books Page", style: TextStyle(fontSize: 22))),
-    const Center(child: Text("Chats Page", style: TextStyle(fontSize: 22))),
+  final List<Widget> _pages = const [
+    HomeFeed(),
+    Center(child: Text("Search Page", style: TextStyle(fontSize: 22))),
+    Center(child: Text("Books Page", style: TextStyle(fontSize: 22))),
+    Center(child: Text("Chats Page", style: TextStyle(fontSize: 22))),
     MyProfileScreen(),
   ];
 
@@ -51,44 +49,48 @@ class _HomeScreenState extends State<HomeScreen> {
         statusBarBrightness: Brightness.light,
       ),
       child: Scaffold(
-        body: Column(children: [Expanded(child: _pages[_page])]),
+        body: _pages[_currentIndex],
 
-        bottomNavigationBar: CurvedNavigationBar(
-          key: _bottomNavigationKey,
-          index: _page,
-          height: 60,
-          backgroundColor: Colors.transparent,
-          color: ColorCodes.primaryColor,
-          animationDuration: const Duration(milliseconds: 300),
-          items: [
-            const Icon(Icons.home, size: 30, color: Colors.white),
-            const Icon(Icons.search, size: 30, color: Colors.white),
-            const Icon(Icons.menu_book, size: 30, color: Colors.white),
-            const Icon(Icons.chat, size: 30, color: Colors.white),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          selectedItemColor: ColorCodes.primaryColor,
+          unselectedItemColor: Colors.grey,
+          showUnselectedLabels: true,
+          elevation: 8,
 
-            GestureDetector(
-              onLongPressStart: (_) {
-                _isHoldingProfile = true;
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Hold for 3 seconds to logout")),
-                );
-
-                _logoutTimer = Timer(const Duration(seconds: 3), () {
-                  if (_isHoldingProfile) {
-                    _logout(context);
-                  }
-                });
-              },
-              onLongPressEnd: (_) {
-                _isHoldingProfile = false;
-                _logoutTimer?.cancel();
-              },
-              child: const Icon(Icons.person, size: 30, color: Colors.white),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search_outlined),
+              activeIcon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu_book_outlined),
+              activeIcon: Icon(Icons.menu_book),
+              label: 'Books',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble_outline),
+              activeIcon: Icon(Icons.chat),
+              label: 'Chats',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              activeIcon: Icon(Icons.person),
+              label: 'Profile',
             ),
           ],
+
           onTap: (index) {
             setState(() {
-              _page = index;
+              _currentIndex = index;
             });
           },
         ),
